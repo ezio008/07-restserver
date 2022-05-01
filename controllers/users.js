@@ -1,14 +1,13 @@
 const { response, request } = require('express');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
-const { validationResult } = require('express-validator');
 
 const usersGet = async (req = request, res = response) => {
 
     const { limit = 5, start = 0 } = req.query;
     const query = { state: true };
 
-    const [ total, users ] = await Promise.all([
+    const [total, users] = await Promise.all([
         User.countDocuments(query),
         User.find(query)
             .skip(Number(start))
@@ -60,13 +59,11 @@ const usersPut = async (req = request, res = response) => {
 const usersDelete = async (req = request, res = response) => {
     const { id } = req.params;
 
-    // lo borramos fisicamente
-    // const user = await User.findByIdAndDelete( id );
-
-    const user = await User.findByIdAndUpdate(id, {state: false})
+    await User.findByIdAndUpdate(id, { state: false });
 
     res.json({
-        user
+        uid: id,
+        msg: 'Usuario eliminado correctamente'
     });
 }
 

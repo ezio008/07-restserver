@@ -8,11 +8,19 @@ const validateRole = async (role = '') => {
     }
 }
 
-const validateEmail = async (email = '') => {
+const validateExistEmail = async (email = '') => {
     const existeEmail = await User.findOne({ email });
     
     if (existeEmail) {
         throw new Error(`El correo ${email} ya existe`);
+    }
+}
+
+const validateNotExistEmail = async (email = '') => {
+    const existeEmail = await User.findOne({ email });
+    
+    if (!existeEmail) {
+        throw new Error(`El correo ${email} no existe`);
     }
 }
 
@@ -24,8 +32,18 @@ const validateIdExist = async (id) => {
     }
 }
 
+const validateUserActive = async (email) => {
+    const existeEmail = await User.findOne({ email });
+    
+    if (!existeEmail.state) {
+        throw new Error(`El usuario con correo ${email} esta deshabilitado`);
+    }
+}
+
 module.exports = {
     validateRole,
-    validateEmail,
-    validateIdExist
+    validateEmail: validateExistEmail,
+    validateIdExist,
+    validateNotExistEmail,
+    validateUserActive
 };
