@@ -29,7 +29,7 @@
             // to decode the credential response.
             const body = { id_token: response.credential };
 
-            fetch('https://restserver-node-loren.herokuapp.com/api/auth/google', {
+            fetch('https://restserver-node-loren.herokuapp.com/api/auth/google', { // URL del server actual
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
