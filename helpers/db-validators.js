@@ -73,6 +73,14 @@ const validateProductNameExist = async (name) => {
     }
 }
 
+const validateCollections = (collection = '', collections = []) => {
+    if(!collections.includes(collection)) {
+        throw new Error(`La colección ${collection} no es permitida (${collections})`);
+    }
+
+    return true;
+} 
+
 module.exports = {
     validateRole,
     validateEmail: validateExistEmail,
@@ -82,5 +90,6 @@ module.exports = {
     validateCategoryExist,
     validateCategoryNameExist,
     validateProductExist,
-    validateProductNameExist
+    validateProductNameExist,
+    validateCollections
 };
